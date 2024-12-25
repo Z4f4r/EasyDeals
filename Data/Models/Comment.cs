@@ -8,9 +8,9 @@ public class Comment
 
     private bool isActive = true;
 
-    private DateTime createdAt = DateTime.Now;
+    private DateTime createdAt = DateTime.Now.ToUniversalTime();
 
-    private DateTime updatedAt = DateTime.Now;
+    private DateTime updatedAt = DateTime.Now.ToUniversalTime();
 
     private int productId;
 

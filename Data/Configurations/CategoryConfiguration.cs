@@ -10,14 +10,16 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         builder.HasKey(x => x.Id);
 
-        builder
-            .HasOne(x => x.ParentCategory)
-            .WithOne(x => x.ParentCategory)
-            .HasForeignKey<Category>(x => x.ParentCategoryId);
+        // builder
+        //    .HasOne(x => x.ParentCategory)
+        //    .WithOne(x => x.ParentCategory)
+        //    .HasForeignKey<Category>(x => x.ParentCategoryId);
 
         builder
             .HasMany(x => x.Products)
             .WithOne(x => x.Category)
             .HasForeignKey(x => x.CategoryId);
+
+        // ToDO
     }
 }

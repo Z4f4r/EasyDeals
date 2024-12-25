@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using EasyDeals.Data.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace EasyDeals.Data.Models;
+namespace EasyDeals.DTOs.CityDTOs;
 
-[Table("Categories")]
-public class Category
+public class CityDTO
 {
     private int id;
 
@@ -15,27 +15,24 @@ public class Category
 
     private DateTime updatedAt = DateTime.Now.ToUniversalTime();
 
-    private int parentCategoryId;
-
-    private Category? parentCategory;
-
     private List<Product> products = [];
 
 
 
+    [Key]
     public int Id { get => id; set => id = value; }
 
+    [Required]
+    [MinLength(5, ErrorMessage = "Title must be 5 characters")]
+    [MaxLength(25, ErrorMessage = "Title cannot be over 25 characters")]
     public string Title { get => title; set => title = value; }
 
+    [Required]
     public bool IsActive { get => isActive; set => isActive = value; }
 
     public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
 
     public DateTime UpdatedAt { get => updatedAt; set => updatedAt = value; }
-
-    public int ParentCategoryId { get => parentCategoryId; set => parentCategoryId = value; }
-
-    public Category? ParentCategory { get => parentCategory; set => parentCategory = value; }
 
     public List<Product> Products { get => products; set => products = value; }
 }
