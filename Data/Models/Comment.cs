@@ -1,5 +1,8 @@
-﻿namespace EasyDeals.Data.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace EasyDeals.Data.Models;
+
+[Table("Comments")]
 public class Comment
 {
     private int id;

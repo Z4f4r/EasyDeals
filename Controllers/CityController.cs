@@ -1,10 +1,7 @@
-﻿using EasyDeals.Data;
-using EasyDeals.Data.Models;
-using EasyDeals.DTOs.CityDTOs;
+﻿using EasyDeals.DTOs.CityDTOs;
 using EasyDeals.Helpers;
 using EasyDeals.Interfaces;
 using EasyDeals.Mappers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyDeals.Controllers;
@@ -81,12 +78,12 @@ public class CityController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var stockModel = await cityRepository.UpdateAsync(id, cityDTO);
+        var cityModel = await cityRepository.UpdateAsync(id, cityDTO);
 
-        if (stockModel == null)
+        if (cityModel == null)
             return NotFound();
 
-        return Ok(stockModel.ToCityDTO());
+        return Ok(cityModel.ToCityDTO());
     }
 
 
@@ -99,9 +96,9 @@ public class CityController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var stockModel = await cityRepository.DeleteAsync(id);
+        var cityModel = await cityRepository.DeleteAsync(id);
 
-        if (stockModel == null)
+        if (cityModel == null)
             return NotFound();
 
         return NoContent();

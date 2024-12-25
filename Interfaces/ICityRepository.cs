@@ -10,7 +10,7 @@ public interface ICityRepository
 
     Task<City?> GetByIdAsync(int id);
 
-    Task<City?> CreateAsync(City comment);
+    Task<City?> CreateAsync(City city);
 
     Task<City?> UpdateAsync(int id, UpdateCityDTO city);
 

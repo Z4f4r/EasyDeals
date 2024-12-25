@@ -36,6 +36,10 @@ public class CityRepository : ICityRepository
         var cities = db.Cities.AsQueryable();
 
 
+        // Checking IsActive (deleted or not)
+        cities = cities.Where(s => s.IsActive == true);
+
+
         // Filter
         if (!string.IsNullOrWhiteSpace(query.Title))
             cities = cities.Where(s => s.Title.Contains(query.Title));
@@ -66,22 +70,29 @@ public class CityRepository : ICityRepository
     // READ
     public async Task<City?> GetByIdAsync(int id)
     {
-        return await db.Cities.FirstOrDefaultAsync(c => c.Id == id);
+        var city = await db.Cities.FirstOrDefaultAsync(c => c.Id == id);
+
+        // Checking IsActive (deleted or not)
+        return city?.IsActive == true ? city : null;
     }
 
 
 
     // UPDATE
-    public async Task<City?> UpdateAsync(int id, UpdateCityDTO comment)
+    public async Task<City?> UpdateAsync(int id, UpdateCityDTO cityDTO)
     {
         var modelCity = await db.Cities.FindAsync(id);
+
+        // Checking IsActive (deleted or not)
+        modelCity = modelCity?.IsActive == true ? modelCity : null;
 
         if (modelCity == null)
             return null;
 
         // Updating the fields
-        modelCity.Title = comment.Title;
-        modelCity.IsActive = comment.IsActive; 
+        modelCity.Title = cityDTO.Title;
+        modelCity.IsActive = cityDTO.IsActive;
+        modelCity.UpdatedAt = DateTime.Now.ToUniversalTime();
 
         await db.SaveChangesAsync();
 
@@ -93,14 +104,18 @@ public class CityRepository : ICityRepository
     // DELETE
     public async Task<City?> DeleteAsync(int id)
     {
-        var citymodel = await db.Cities.FirstOrDefaultAsync(c => c.Id == id);
+        var modelCity = await db.Cities.FirstOrDefaultAsync(c => c.Id == id);
 
-        if (citymodel == null) 
+        // Checking IsActive (deleted or not)
+        modelCity = modelCity?.IsActive == true ? modelCity : null;
+
+        if (modelCity == null) 
             return null;
 
-        db.Cities.Remove(citymodel);
+        modelCity.IsActive = false;
+        // db.Cities.Remove(modelCity);
         await db.SaveChangesAsync();
 
-        return citymodel;
+        return modelCity;
     }
 }

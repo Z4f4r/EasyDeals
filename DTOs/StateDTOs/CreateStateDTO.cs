@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EasyDeals.DTOs.CityDTOs;
+namespace EasyDeals.DTOs.StateDTOs;
 
-public class UpdateCityDTO
+public class CreateStateDTO 
 {
     private string title = string.Empty;
 

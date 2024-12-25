@@ -3,7 +3,6 @@ using EasyDeals.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace EasyDeals.Data;
 
@@ -18,7 +17,7 @@ public class ApplicationDbContext(DbContextOptions dbContextOptions) :
 
     public DbSet<City> Cities { get; set; }
 
-    public DbSet<Comment> Commnets { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     public DbSet<Product> Products { get; set; }
 
