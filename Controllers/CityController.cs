@@ -1,6 +1,7 @@
 ﻿using EasyDeals.Data;
 using EasyDeals.Data.Models;
 using EasyDeals.DTOs.CityDTOs;
+using EasyDeals.Helpers;
 using EasyDeals.Interfaces;
 using EasyDeals.Mappers;
 using Microsoft.AspNetCore.Http;
@@ -23,13 +24,13 @@ public class CityController : ControllerBase
 
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] CityQueryObject query)
     {
         // Validation
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var cities = await cityRepository.GetAllAsync();
+        var cities = await cityRepository.GetAllAsync(query);
 
         var citiesDTO = cities?.Select(c => c.ToCityDTO()).ToList();
 

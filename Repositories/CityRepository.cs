@@ -1,6 +1,7 @@
 ﻿using EasyDeals.Data;
 using EasyDeals.Data.Models;
 using EasyDeals.DTOs.CityDTOs;
+using EasyDeals.Helpers;
 using EasyDeals.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,9 +31,34 @@ public class CityRepository : ICityRepository
 
 
     // READ
-    public async Task<List<City>?> GetAllAsync()
+    public async Task<List<City>?> GetAllAsync(CityQueryObject query)
     {
-        return await db.Cities.ToListAsync();
+        var cities = db.Cities.AsQueryable();
+
+
+        // Filter
+        if (!string.IsNullOrWhiteSpace(query.Title))
+            cities = cities.Where(s => s.Title.Contains(query.Title));
+        // ToDO (add CreatedAt and UpdatedAt filter)
+
+
+        // Sorting
+        if (!string.IsNullOrWhiteSpace(query.SortBy))
+        {
+            if (query.SortBy.Equals("Title", StringComparison.OrdinalIgnoreCase))
+                cities = query.IsDescending ? cities.OrderByDescending(s => s.Title) : cities.OrderBy(s => s.Title);
+            else if (query.SortBy.Equals("CreatedAt", StringComparison.OrdinalIgnoreCase))
+                cities = query.IsDescending ? cities.OrderByDescending(s => s.CreatedAt) : cities.OrderBy(s => s.CreatedAt);
+            else if (query.SortBy.Equals("Date", StringComparison.OrdinalIgnoreCase))
+                cities = query.IsDescending ? cities.OrderByDescending(s => s.UpdatedAt) : cities.OrderBy(s => s.UpdatedAt);
+        }
+
+
+        // Pagination
+        var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+
+        return await cities.Skip(skipNumber).Take(query.PageSize).ToListAsync();
     }
 
 

@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Service\" />
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
 	<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.39" />
