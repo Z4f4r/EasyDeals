@@ -81,7 +81,7 @@ public class CityController : ControllerBase
         var cityModel = await cityRepository.UpdateAsync(id, cityDTO);
 
         if (cityModel == null)
-            return NotFound();
+            return NotFound("City not found");
 
         return Ok(cityModel.ToCityDTO());
     }
@@ -99,7 +99,7 @@ public class CityController : ControllerBase
         var cityModel = await cityRepository.DeleteAsync(id);
 
         if (cityModel == null)
-            return NotFound();
+            return NotFound("City not found");
 
         return NoContent();
     }

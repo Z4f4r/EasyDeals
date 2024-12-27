@@ -112,8 +112,7 @@ public class StateRepository : IStateRepository
         if (modelState == null)
             return null;
 
-        modelState.IsActive = false;
-        // db.States.Remove(modelState);
+        modelState!.IsActive = false;
         await db.SaveChangesAsync();
 
         return modelState;

@@ -70,7 +70,7 @@ public class CityRepository : ICityRepository
     // READ
     public async Task<City?> GetByIdAsync(int id)
     {
-        var city = await db.Cities.FirstOrDefaultAsync(c => c.Id == id);
+        var city = await db.Cities.FindAsync(id);
 
         // Checking IsActive (deleted or not)
         return city?.IsActive == true ? city : null;
@@ -112,8 +112,7 @@ public class CityRepository : ICityRepository
         if (modelCity == null) 
             return null;
 
-        modelCity.IsActive = false;
-        // db.Cities.Remove(modelCity);
+        modelCity!.IsActive = false;
         await db.SaveChangesAsync();
 
         return modelCity;

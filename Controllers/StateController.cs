@@ -81,7 +81,7 @@ public class StateController : ControllerBase
         var stateModel = await stateRepository.UpdateAsync(id, stateDTO);
 
         if (stateModel == null)
-            return NotFound();
+            return NotFound("State not found");
 
         return Ok(stateModel.ToStateDTO());
     }
@@ -99,7 +99,7 @@ public class StateController : ControllerBase
         var stateModel = await stateRepository.DeleteAsync(id);
 
         if (stateModel == null)
-            return NotFound();
+            return NotFound("State not found");
 
         return NoContent();
     }

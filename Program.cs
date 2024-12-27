@@ -24,6 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // DI and IOC
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IStateRepository, StateRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
 
