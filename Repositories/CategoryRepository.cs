@@ -1,6 +1,7 @@
 ﻿using EasyDeals.Data;
 using EasyDeals.Data.Models;
 using EasyDeals.DTOs.CategoryDTOs;
+using EasyDeals.Helpers;
 using EasyDeals.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,14 +31,40 @@ public class CategoryRepository : ICategoryRepository
 
 
     // READ
-    public async Task<List<Category>?> GetAllAsync()
+    public async Task<List<Category>?> GetAllAsync(CategoryQueryObject query)
     {
-        var categories = await db.Categories
-            .Where(s => s.IsActive == true)
-            .Include(s => s.ParentCategory)
-            .ToListAsync();
+        var categories = db.Categories.AsQueryable();
 
-        return categories;
+
+        // Checking IsActive (deleted or not)
+        categories = categories.Where(s => s.IsActive == true);
+
+
+        // Filter
+        if (!string.IsNullOrWhiteSpace(query.Title))
+            categories = categories.Where(s => s.Title.Contains(query.Title));
+        if (query.ParentCategoryId != null)
+            categories = categories.Where(s => s.ParentCategoryId == query.ParentCategoryId);
+        // ToDO (add CreatedAt and UpdatedAt filter)
+
+
+        // Sorting
+        if (!string.IsNullOrWhiteSpace(query.SortBy))
+        {
+            if (query.SortBy.Equals("Title", StringComparison.OrdinalIgnoreCase))
+                categories = query.IsDescending ? categories.OrderByDescending(s => s.Title) : categories.OrderBy(s => s.Title);
+            else if (query.SortBy.Equals("CreatedAt", StringComparison.OrdinalIgnoreCase))
+                categories = query.IsDescending ? categories.OrderByDescending(s => s.CreatedAt) : categories.OrderBy(s => s.CreatedAt);
+            else if (query.SortBy.Equals("Date", StringComparison.OrdinalIgnoreCase))
+                categories = query.IsDescending ? categories.OrderByDescending(s => s.UpdatedAt) : categories.OrderBy(s => s.UpdatedAt);
+        }
+
+
+        // Pagination
+        var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+
+        return await categories.Skip(skipNumber).Take(query.PageSize).ToListAsync();
     }
 
 

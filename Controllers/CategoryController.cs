@@ -1,4 +1,5 @@
 ﻿using EasyDeals.DTOs.CategoryDTOs;
+using EasyDeals.Helpers;
 using EasyDeals.Interfaces;
 using EasyDeals.Mappers;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,13 @@ public class CategoryController : ControllerBase
 
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] CategoryQueryObject query)
     {
         // Validation
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var categories = await categoryRepository.GetAllAsync();
+        var categories = await categoryRepository.GetAllAsync(query);
 
         var categoryDTO = categories?.Select(x => x.ToCategoryDTO());
 
