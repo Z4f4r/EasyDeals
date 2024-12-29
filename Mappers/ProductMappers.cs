@@ -23,6 +23,7 @@ public static class ProductMappers
             UserId = product.UserId,
             CityId = product.CityId,
             StateId = product.StateId,
+            Comments = product.Comments.Select(c => c.ToCommentDTO()).ToList(),
             Favorites = product.Favorites
             // ToDo Each Favorite to FavoriteDTO
         };

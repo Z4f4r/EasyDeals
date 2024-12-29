@@ -44,6 +44,8 @@ public class Product
 
     private State? state;
 
+    public List<Comment> comments = [];
+
     private List<Favorite> favorites = [];
 
 
@@ -85,6 +87,8 @@ public class Product
     public City? City { get => city; set => city = value; }
 
     public State? State { get => state; set => state = value; }
+
+    public List<Comment> Comments { get => comments; set => comments = value; }
 
     public List<Favorite> Favorites { get => favorites; set => favorites = value; }
 }

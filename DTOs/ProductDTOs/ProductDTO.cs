@@ -1,4 +1,5 @@
 ﻿using EasyDeals.Data.Models;
+using EasyDeals.DTOs.CommentDTOs;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -35,6 +36,8 @@ public class ProductDTO
     private int stateId;
 
     private List<Favorite> favorites = [];
+
+    public List<CommentDTO> comments = [];
 
 
     // Getters and Setters
@@ -76,6 +79,8 @@ public class ProductDTO
     public int CityId { get => cityId; set => cityId = value; }
 
     public int StateId { get => stateId; set => stateId = value; }
+
+    public List<CommentDTO> Comments { get => comments; set => comments = value; }
 
     public List<Favorite> Favorites { get => favorites; set => favorites = value; }
 }

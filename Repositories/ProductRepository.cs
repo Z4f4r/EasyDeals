@@ -33,7 +33,10 @@ public class ProductRepository : IProductRepository
     // READ
     public async Task<List<Product>?> GetAllAsync(ProductQueryObject query)
     {
-        var products = db.Products.Include(a => a.AppUser).AsQueryable();
+        var products = db.Products
+            .Include(a => a.AppUser)
+            .Include(a => a.Comments).ThenInclude(a => a.AppUser)
+            .AsQueryable();
 
 
         // Checking IsActive (deleted or not)
@@ -88,7 +91,10 @@ public class ProductRepository : IProductRepository
     // READ
     public async Task<Product?> GetByIdAsync(int id)
     {
-        var product = await db.Products.Include(a => a.AppUser).FirstOrDefaultAsync(x => x.Id == id);
+        var product = await db.Products
+            .Include(a => a.AppUser)
+            .Include(a => a.Comments).ThenInclude(a => a.AppUser)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         return product?.IsActive == true ? product : null;
     }
