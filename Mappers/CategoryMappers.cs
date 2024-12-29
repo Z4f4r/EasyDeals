@@ -14,8 +14,7 @@ public static class CategoryMappers
             CreatedAt = category.CreatedAt,
             UpdatedAt = category.UpdatedAt,
             ParentCategoryId = category.ParentCategoryId != 0 ? category.ParentCategoryId : null,
-            Products = category.Products
-            // ToDO Each Product to ProductDTO
+            Products = category.Products.Select(s => s.ToProductDTO()).ToList()
         };
     }
 

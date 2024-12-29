@@ -13,8 +13,7 @@ public static class CityMappers
             Title = city.Title,
             CreatedAt = city.CreatedAt,
             UpdatedAt = city.UpdatedAt,
-            Products = city.Products
-            // ToDO Each Product to ProductDTO
+            Products = city.Products.Select(s => s.ToProductDTO()).ToList()
         };
     }
 

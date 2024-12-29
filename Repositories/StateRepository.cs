@@ -33,7 +33,7 @@ public class StateRepository : IStateRepository
     // READ
     public async Task<List<State>?> GetAllAsync(StateQueryObject query)
     {
-        var states = db.States.AsQueryable();
+        var states = db.States.Include(x => x.Products).AsQueryable();
 
 
         // Checking IsActive (deleted or not)
@@ -70,7 +70,7 @@ public class StateRepository : IStateRepository
     // READ
     public async Task<State?> GetByIdAsync(int id)
     {
-        var state = await db.States.FirstOrDefaultAsync(c => c.Id == id);
+        var state = await db.States.Include(x => x.Products).FirstOrDefaultAsync(c => c.Id == id);
 
         // Checking IsActive (deleted or not)
         return state?.IsActive == true ? state : null;
@@ -81,7 +81,7 @@ public class StateRepository : IStateRepository
     // UPDATE
     public async Task<State?> UpdateAsync(int id, UpdateStateDTO stateDTO)
     {
-        var modelState = await db.States.FindAsync(id);
+        var modelState = await db.States.Include(x => x.Products).FirstOrDefaultAsync(c => c.Id == id);
 
         if (modelState == null || modelState.IsActive == false)
             return null;
@@ -100,7 +100,7 @@ public class StateRepository : IStateRepository
     // DELETE
     public async Task<State?> DeleteAsync(int id)
     {
-        var modelState = await db.States.FirstOrDefaultAsync(c => c.Id == id);
+        var modelState = await db.States.Include(x => x.Products).FirstOrDefaultAsync(c => c.Id == id);
 
         // Checking IsActive (deleted or not)
         modelState = modelState?.IsActive == true ? modelState : null;

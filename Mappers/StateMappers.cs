@@ -13,8 +13,7 @@ public static class StateMappers
             Title = state.Title,
             CreatedAt = state.CreatedAt,
             UpdatedAt = state.UpdatedAt,
-            Products = state.Products
-            // ToDO Each Product to ProductDTO
+            Products = state.Products.Select(s => s.ToProductDTO()).ToList()
         };
     }
 

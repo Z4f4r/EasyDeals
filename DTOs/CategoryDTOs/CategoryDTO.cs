@@ -1,4 +1,5 @@
 ﻿using EasyDeals.Data.Models;
+using EasyDeals.DTOs.ProductDTOs;
 using System.ComponentModel.DataAnnotations;
 
 namespace EasyDeals.DTOs.CategoryDTOs;
@@ -15,7 +16,7 @@ public class CategoryDTO
 
     private int? parentCategoryId = null;
 
-    private List<Product> products = [];
+    private List<ProductDTO> products = [];
 
 
     // Getters and Setters
@@ -33,5 +34,5 @@ public class CategoryDTO
 
     public int? ParentCategoryId { get => parentCategoryId; set => parentCategoryId = value; }
 
-    public List<Product> Products { get => products; set => products = value; }
+    public List<ProductDTO> Products { get => products; set => products = value; }
 }

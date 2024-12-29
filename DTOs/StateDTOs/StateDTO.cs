@@ -1,4 +1,4 @@
-﻿using EasyDeals.Data.Models;
+﻿using EasyDeals.DTOs.ProductDTOs;
 using System.ComponentModel.DataAnnotations;
 
 namespace EasyDeals.DTOs.StateDTOs;
@@ -13,7 +13,7 @@ public class StateDTO
 
     private DateTime updatedAt = DateTime.Now.ToUniversalTime();
 
-    private List<Product> products = [];
+    private List<ProductDTO> products = [];
 
 
     // Getters and Setters
@@ -29,5 +29,5 @@ public class StateDTO
 
     public DateTime UpdatedAt { get => updatedAt; set => updatedAt = value; }
 
-    public List<Product> Products { get => products; set => products = value; }
+    public List<ProductDTO> Products { get => products; set => products = value; }
 }

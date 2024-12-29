@@ -33,7 +33,7 @@ public class CityRepository : ICityRepository
     // READ
     public async Task<List<City>?> GetAllAsync(CityQueryObject query)
     {
-        var cities = db.Cities.AsQueryable();
+        var cities = db.Cities.Include(x => x.Products).AsQueryable();
 
 
         // Checking IsActive (deleted or not)
@@ -70,7 +70,7 @@ public class CityRepository : ICityRepository
     // READ
     public async Task<City?> GetByIdAsync(int id)
     {
-        var city = await db.Cities.FindAsync(id);
+        var city = await db.Cities.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == id);
 
         // Checking IsActive (deleted or not)
         return city?.IsActive == true ? city : null;
@@ -81,7 +81,7 @@ public class CityRepository : ICityRepository
     // UPDATE
     public async Task<City?> UpdateAsync(int id, UpdateCityDTO cityDTO)
     {
-        var modelCity = await db.Cities.FindAsync(id);
+        var modelCity = await db.Cities.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == id);
 
         if (modelCity == null || modelCity.IsActive == false)
             return null;
@@ -100,7 +100,7 @@ public class CityRepository : ICityRepository
     // DELETE
     public async Task<City?> DeleteAsync(int id)
     {
-        var modelCity = await db.Cities.FirstOrDefaultAsync(c => c.Id == id);
+        var modelCity = await db.Cities.Include(x => x.Products).FirstOrDefaultAsync(c => c.Id == id);
 
         // Checking IsActive (deleted or not)
         modelCity = modelCity?.IsActive == true ? modelCity : null;

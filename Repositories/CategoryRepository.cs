@@ -33,7 +33,7 @@ public class CategoryRepository : ICategoryRepository
     // READ
     public async Task<List<Category>?> GetAllAsync(CategoryQueryObject query)
     {
-        var categories = db.Categories.AsQueryable();
+        var categories = db.Categories.Include(x => x.Products).AsQueryable();
 
 
         // Checking IsActive (deleted or not)
@@ -72,7 +72,7 @@ public class CategoryRepository : ICategoryRepository
     // READ
     public async Task<Category?> GetByIdAsync(int id)
     {
-        var category = await db.Categories.FindAsync(id);
+        var category = await db.Categories.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == id);
         // ToDo include ParentCategory
 
         return category?.IsActive == true ? category : null;
@@ -83,7 +83,7 @@ public class CategoryRepository : ICategoryRepository
     // UPDATE
     public async Task<Category?> UpdateAsync(int id, UpdateCategoryDTO updateCategoryDTO)
     {
-        var modelCategory = await db.Categories.FindAsync(id);
+        var modelCategory = await db.Categories.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == id);
 
         if (modelCategory == null || modelCategory.IsActive == false)
             return null;
@@ -103,7 +103,7 @@ public class CategoryRepository : ICategoryRepository
     // DELETE
     public async Task<Category?> DeleteAsync(int id)
     {
-        var modelCategory = await db.Categories.FindAsync(id);
+        var modelCategory = await db.Categories.Include(x => x.Products).FirstOrDefaultAsync(x => x.Id == id);
 
         // Checking IsActive (deleted or not)
         modelCategory = modelCategory?.IsActive == true ? modelCategory : null;
