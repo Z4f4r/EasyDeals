@@ -83,15 +83,11 @@ public class StateRepository : IStateRepository
     {
         var modelState = await db.States.FindAsync(id);
 
-        // Checking IsActive (deleted or not)
-        modelState = modelState?.IsActive == true ? modelState : null;
-
-        if (modelState == null)
+        if (modelState == null || modelState.IsActive == false)
             return null;
 
         // Updating the fields
         modelState.Title = stateDTO.Title;
-        modelState.IsActive = stateDTO.IsActive;
         modelState.UpdatedAt = DateTime.Now.ToUniversalTime();
 
         await db.SaveChangesAsync();

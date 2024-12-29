@@ -19,7 +19,7 @@ public class CategoryQueryObject
     public int pageSize = 20;
 
 
-
+    // Getters and Setters
     public string Title { get => title; set => title = value; }
 
     public int? ParentCategoryId { get => parentCategoryId; set => parentCategoryId = value; }

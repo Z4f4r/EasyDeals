@@ -14,7 +14,7 @@ public class Favorite
     private Product? product;
 
 
-
+    // Getters and Setters
     public string? AppUserId { get; set; }
 
     public int ProductId { get; set; }

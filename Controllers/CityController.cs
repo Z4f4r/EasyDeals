@@ -29,7 +29,7 @@ public class CityController : ControllerBase
 
         var cities = await cityRepository.GetAllAsync(query);
 
-        var citiesDTO = cities?.Select(c => c.ToCityDTO()).ToList();
+        var citiesDTO = cities?.Select(c => c.ToCityDTO());
 
         return Ok(citiesDTO);
     }

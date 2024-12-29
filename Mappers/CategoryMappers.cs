@@ -3,7 +3,7 @@ using EasyDeals.DTOs.CategoryDTOs;
 
 namespace EasyDeals.Mappers;
 
-public static class CategoryMapper
+public static class CategoryMappers
 {
     public static CategoryDTO ToCategoryDTO(this Category category)
     {
@@ -13,7 +13,6 @@ public static class CategoryMapper
             Title = category.Title,
             CreatedAt = category.CreatedAt,
             UpdatedAt = category.UpdatedAt,
-            IsActive = category.IsActive,
             ParentCategoryId = category.ParentCategoryId != 0 ? category.ParentCategoryId : null,
             Products = category.Products
             // ToDO Each Product to ProductDTO
@@ -25,7 +24,6 @@ public static class CategoryMapper
         return new Category
         {
             Title = createCategoryDTO.Title,
-            IsActive = createCategoryDTO.IsActive,
             ParentCategoryId = createCategoryDTO.ParentCategoryId != 0 ? createCategoryDTO.ParentCategoryId : null
         };
     }

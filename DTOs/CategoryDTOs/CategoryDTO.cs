@@ -9,8 +9,6 @@ public class CategoryDTO
 
     private string title = string.Empty;
 
-    private bool isActive = true;
-
     private DateTime createdAt = DateTime.Now.ToUniversalTime();
 
     private DateTime updatedAt = DateTime.Now.ToUniversalTime();
@@ -20,7 +18,7 @@ public class CategoryDTO
     private List<Product> products = [];
 
 
-
+    // Getters and Setters
     [Key]
     public int Id { get => id; set => id = value; }
 
@@ -28,9 +26,6 @@ public class CategoryDTO
     [MinLength(2, ErrorMessage = "Title must be 2 characters")]
     [MaxLength(25, ErrorMessage = "Title cannot be over 25 characters")]
     public string Title { get => title; set => title = value; }
-
-    [Required]
-    public bool IsActive { get => isActive; set => isActive = value; }
 
     public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
 

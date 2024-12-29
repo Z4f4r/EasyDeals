@@ -13,7 +13,6 @@ public static class StateMappers
             Title = state.Title,
             CreatedAt = state.CreatedAt,
             UpdatedAt = state.UpdatedAt,
-            IsActive = state.IsActive,
             Products = state.Products
             // ToDO Each Product to ProductDTO
         };
@@ -24,7 +23,6 @@ public static class StateMappers
         return new State
         {
             Title = createStateDTO.Title,
-            IsActive = createStateDTO.IsActive
         };
     }
 }

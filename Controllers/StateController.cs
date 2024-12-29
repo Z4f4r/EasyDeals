@@ -29,7 +29,7 @@ public class StateController : ControllerBase
 
         var states = await stateRepository.GetAllAsync(query);
 
-        var statesDTO = states?.Select(c => c.ToStateDTO()).ToList();
+        var statesDTO = states?.Select(c => c.ToStateDTO());
 
         return Ok(statesDTO);
     }

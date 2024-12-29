@@ -85,15 +85,11 @@ public class CategoryRepository : ICategoryRepository
     {
         var modelCategory = await db.Categories.FindAsync(id);
 
-        // Checking IsActive (deleted or not)
-        modelCategory = modelCategory?.IsActive == true ? modelCategory : null;
-
-        if (modelCategory == null)
+        if (modelCategory == null || modelCategory.IsActive == false)
             return null;
 
         // Updating the fields
         modelCategory.Title = updateCategoryDTO.Title;
-        modelCategory.IsActive = updateCategoryDTO.IsActive;
         modelCategory.ParentCategoryId = updateCategoryDTO.ParentCategoryId;
         modelCategory.UpdatedAt = DateTime.Now.ToUniversalTime();
 

@@ -17,7 +17,7 @@ public class StateQueryObject
     public int pageSize = 20;
 
 
-
+    // Getters and Setters
     public string Title { get => title; set => title = value; }
 
     // public DateTime CreatedAt { get => createdAt; set => createdAt = value; }

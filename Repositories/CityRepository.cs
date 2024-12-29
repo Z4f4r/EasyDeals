@@ -83,15 +83,11 @@ public class CityRepository : ICityRepository
     {
         var modelCity = await db.Cities.FindAsync(id);
 
-        // Checking IsActive (deleted or not)
-        modelCity = modelCity?.IsActive == true ? modelCity : null;
-
-        if (modelCity == null)
+        if (modelCity == null || modelCity.IsActive == false)
             return null;
 
         // Updating the fields
         modelCity.Title = cityDTO.Title;
-        modelCity.IsActive = cityDTO.IsActive;
         modelCity.UpdatedAt = DateTime.Now.ToUniversalTime();
 
         await db.SaveChangesAsync();

@@ -17,14 +17,14 @@ public class Comment
 
     private int productId;
 
-    private int userId;
+    private string userId = string.Empty;
 
     private Product? product;
 
     private AppUser? appUser;
 
 
-
+    // Getters and Setters
     public int Id { get => id; set => id = value; }
 
     public string Body { get => body; set => body = value; }
@@ -37,7 +37,7 @@ public class Comment
 
     public int ProductId { get => productId; set => productId = value; }
 
-    public int UserId { get => userId; set => userId = value; }
+    public string UserId { get => userId; set => userId = value; }
 
     public Product? Product { get => product; set => product = value; }
 

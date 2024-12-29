@@ -13,7 +13,6 @@ public static class CityMappers
             Title = city.Title,
             CreatedAt = city.CreatedAt,
             UpdatedAt = city.UpdatedAt,
-            IsActive = city.IsActive,
             Products = city.Products
             // ToDO Each Product to ProductDTO
         };
@@ -24,7 +23,6 @@ public static class CityMappers
         return new City
         {
             Title = createCityDTO.Title,
-            IsActive = createCityDTO.IsActive
         };
     }
 }
