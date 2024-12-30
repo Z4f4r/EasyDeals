@@ -2,6 +2,7 @@
 using EasyDeals.Helpers;
 using EasyDeals.Interfaces;
 using EasyDeals.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyDeals.Controllers;
@@ -55,6 +56,7 @@ public class CategoryController : ControllerBase
 
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] CreateCategoryDTO categoryDTO)
     {
         // Validation
@@ -62,6 +64,10 @@ public class CategoryController : ControllerBase
             return BadRequest(ModelState);
 
         var categoryModel = categoryDTO.ToCategoryFromCreate();
+
+        if (categoryModel.ParentCategoryId != null &&
+            !await categoryRepository.CategoryExists(categoryModel.ParentCategoryId ?? -1))
+            return NotFound($"Parent Category with ID {categoryModel.ParentCategoryId} not found.");
 
         await categoryRepository.CreateAsync(categoryModel);
 
@@ -72,11 +78,16 @@ public class CategoryController : ControllerBase
 
     [HttpPut]
     [Route("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCategoryDTO categoryDTO)
     {
         // Validation
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
+
+        if (categoryDTO.ParentCategoryId != null && 
+            !await categoryRepository.CategoryExists(categoryDTO.ParentCategoryId ?? -1))
+            return NotFound($"Parent Category with ID {categoryDTO.ParentCategoryId} not found.");
 
         var categoryModel = await categoryRepository.UpdateAsync(id, categoryDTO);
 
@@ -90,6 +101,7 @@ public class CategoryController : ControllerBase
 
     [HttpDelete]
     [Route("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         // Validation

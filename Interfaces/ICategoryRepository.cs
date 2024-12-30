@@ -15,4 +15,6 @@ public interface ICategoryRepository
     Task<Category?> UpdateAsync(int id, UpdateCategoryDTO updateCategoryDTO);
 
     Task<Category?> DeleteAsync(int id);
+
+    Task<bool> CategoryExists(int id);
 }

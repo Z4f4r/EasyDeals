@@ -4,6 +4,8 @@ using EasyDeals.Extensions;
 using EasyDeals.Helpers;
 using EasyDeals.Interfaces;
 using EasyDeals.Mappers;
+using EasyDeals.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,14 +16,23 @@ namespace EasyDeals.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly IProductRepository productRepository;
+    private readonly ICategoryRepository categoryRepository;
+    private readonly ICityRepository cityRepository;
+    private readonly IStateRepository stateRepository;
     private readonly UserManager<AppUser> userManager;
 
     // DI conctructor
     public ProductController(IProductRepository productRepository,
-        UserManager<AppUser> userManager)
+        UserManager<AppUser> userManager,
+        ICategoryRepository categoryRepository,
+        ICityRepository cityRepository,
+        IStateRepository stateRepository)
     {
         this.productRepository = productRepository;
         this.userManager = userManager;
+        this.categoryRepository = categoryRepository;
+        this.cityRepository = cityRepository;
+        this.stateRepository = stateRepository;
     }
 
 
@@ -61,6 +72,7 @@ public class ProductController : ControllerBase
 
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] CreateProductDTO productDTO)
     {
         // Validation
@@ -73,6 +85,15 @@ public class ProductController : ControllerBase
 
         var product = productDTO.ToProductFromCreate();
         product.UserId = appUser!.Id;
+
+        if (!await categoryRepository.CategoryExists(product.CategoryId))
+            return NotFound($"Category with ID {product.CategoryId} not found.");
+        if (!await cityRepository.CityExists(product.CityId))
+            return NotFound($"City with ID {product.CityId} not found.");
+        if (!await stateRepository.StateExists(product.StateId))
+            return NotFound($"State with ID {product.StateId} not found.");
+
+
         await productRepository.CreateAsync(product);
 
         return CreatedAtAction(nameof(GetById), new { id = product.Id }, product.ToProductDTO());
@@ -82,11 +103,19 @@ public class ProductController : ControllerBase
 
     [HttpPut]
     [Route("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateProductDTO productDTO)
     {
         // Validation
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
+
+        if (!await categoryRepository.CategoryExists(productDTO.CategoryId))
+            return NotFound($"Category with ID {productDTO.CategoryId} not found.");
+        if (!await cityRepository.CityExists(productDTO.CityId))
+            return NotFound($"City with ID {productDTO.CityId} not found.");
+        if (!await stateRepository.StateExists(productDTO.StateId))
+            return NotFound($"State with ID {productDTO.StateId} not found.");
 
         var product = await productRepository.UpdateAsync(id, productDTO);
 
@@ -100,6 +129,7 @@ public class ProductController : ControllerBase
 
     [HttpDelete]
     [Route("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         // Validation

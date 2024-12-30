@@ -113,4 +113,11 @@ public class CityRepository : ICityRepository
 
         return modelCity;
     }
+
+    
+
+    public async Task<bool> CityExists(int id)
+    {
+        return await db.Cities.AnyAsync(x => x.IsActive && x.Id == id);
+    }
 }

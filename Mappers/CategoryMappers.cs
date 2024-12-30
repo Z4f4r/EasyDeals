@@ -13,7 +13,7 @@ public static class CategoryMappers
             Title = category.Title,
             CreatedAt = category.CreatedAt,
             UpdatedAt = category.UpdatedAt,
-            ParentCategoryId = category.ParentCategoryId != 0 ? category.ParentCategoryId : null,
+            ParentCategoryId = category.ParentCategoryId,
             Products = category.Products.Select(s => s.ToProductDTO()).ToList()
         };
     }
@@ -23,7 +23,7 @@ public static class CategoryMappers
         return new Category
         {
             Title = createCategoryDTO.Title,
-            ParentCategoryId = createCategoryDTO.ParentCategoryId != 0 ? createCategoryDTO.ParentCategoryId : null
+            ParentCategoryId = createCategoryDTO.ParentCategoryId
         };
     }
 }

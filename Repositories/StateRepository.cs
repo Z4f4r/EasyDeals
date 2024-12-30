@@ -113,4 +113,11 @@ public class StateRepository : IStateRepository
 
         return modelState;
     }
+
+
+
+    public async Task<bool> StateExists(int id)
+    {
+        return await db.States.AnyAsync(x => x.IsActive && x.Id == id);
+    }
 }

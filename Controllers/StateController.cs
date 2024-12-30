@@ -2,6 +2,7 @@
 using EasyDeals.Helpers;
 using EasyDeals.Interfaces;
 using EasyDeals.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyDeals.Controllers;
@@ -55,6 +56,7 @@ public class StateController : ControllerBase
 
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] CreateStateDTO stateDTO)
     {
         // Validation
@@ -72,6 +74,7 @@ public class StateController : ControllerBase
 
     [HttpPut]
     [Route("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateStateDTO stateDTO)
     {
         // Validation
@@ -90,6 +93,7 @@ public class StateController : ControllerBase
 
     [HttpDelete]
     [Route("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         // Validation

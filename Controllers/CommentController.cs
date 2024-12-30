@@ -4,7 +4,6 @@ using EasyDeals.Extensions;
 using EasyDeals.Interfaces;
 using EasyDeals.Mappers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -111,6 +110,7 @@ public class CommentController : ControllerBase
 
     [HttpDelete]
     [Route("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
         // Validation

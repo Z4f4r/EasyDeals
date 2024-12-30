@@ -15,4 +15,6 @@ public interface ICityRepository
     Task<City?> UpdateAsync(int id, UpdateCityDTO city);
 
     Task<City?> DeleteAsync(int id);
+
+    Task<bool> CityExists(int id);
 }

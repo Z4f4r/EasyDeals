@@ -15,4 +15,6 @@ public interface IStateRepository
     Task<State?> UpdateAsync(int id, UpdateStateDTO state);
 
     Task<State?> DeleteAsync(int id);
+
+    Task<bool> StateExists(int id);
 }

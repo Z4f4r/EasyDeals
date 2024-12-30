@@ -116,4 +116,11 @@ public class CategoryRepository : ICategoryRepository
 
         return modelCategory;
     }
+
+
+
+    public async Task<bool> CategoryExists(int id)
+    {
+        return await db.Categories.AnyAsync(x => x.IsActive && x.Id == id);
+    }
 }
