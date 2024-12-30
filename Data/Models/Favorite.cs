@@ -15,11 +15,11 @@ public class Favorite
 
 
     // Getters and Setters
-    public string? AppUserId { get; set; }
+    public string? AppUserId { get => appUserId; set => appUserId = value; }
 
-    public int ProductId { get; set; }
+    public int ProductId { get => productId; set => productId = value; }
 
-    public AppUser? AppUser { get; set; }
+    public AppUser? AppUser { get => appUser; set => appUser = value; }
 
-    public Product? Product { get; set; }
+    public Product? Product { get => product; set => product = value; }
 }

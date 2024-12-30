@@ -15,4 +15,6 @@ public interface IProductRepository
     Task<Product?> UpdateAsync(int id, UpdateProductDTO updateProductDTO);
 
     Task<Product?> DeleteAsync(int id);
+
+    Task<Product?> GetByTitleAsync(string title);
 }

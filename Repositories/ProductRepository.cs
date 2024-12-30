@@ -141,4 +141,14 @@ public class ProductRepository : IProductRepository
 
         return productModel;
     }
+
+
+
+    // READ
+    public async Task<Product?> GetByTitleAsync(string title)
+    {
+        return await db.Products
+            .Where(s => s.IsActive == true)
+            .FirstOrDefaultAsync(c => c.Title == title);
+    }
 }
